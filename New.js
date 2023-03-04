@@ -1,15 +1,15 @@
 "use strict"
 
 class MyDate {
-    constructor(year = 1970, month = 0, date = 1, hours = 0, minutes = 0, seconds = 0, mliseconds = 0) {
-        this._year = year
-        this._month = month
-        this._date = date
-        this._hour = hours
-        this._minutes = minutes
-        this._seconds = seconds
-        this._miliseconds = mliseconds
-    }
+
+    _year = 1970
+    _month = 0
+    _date = 1
+    _hour = 0
+    _minutes = 0
+    _seconds = 0
+    _miliseconds = 0
+
     set year(value) {
         this._year = value
     }
@@ -77,10 +77,9 @@ class MyDate {
 };
 
 class MyNewDate extends MyDate {
-    constructor() {
-        super()
-        this._day = 1
-    }
+
+    _day = this.date
+
     get day() {
         this._day = Math.ceil(this.date / 7)
         if (this.date <= 7) {
@@ -155,5 +154,7 @@ class MyNewDate extends MyDate {
 }
 
 let x = new MyNewDate()
-x.miliseconds = 1000*60*60*24*600
+x.miliseconds = 1000 * 60 * 60 * 24 * 605
 console.log(x.fulldate);
+
+

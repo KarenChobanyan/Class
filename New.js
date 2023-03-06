@@ -1,7 +1,9 @@
 "use strict"
 
-class MyDate {
+const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
+class MyDate {
     _year = 1970
     _month = 0
     _date = 1
@@ -9,7 +11,6 @@ class MyDate {
     _minutes = 0
     _seconds = 0
     _miliseconds = 0
-
     set year(value) {
         this._year = value
     }
@@ -18,31 +19,20 @@ class MyDate {
     }
     set month(value) {
         this.year += Math.floor(value / 12)
-        this._month += value % 12
+        this._month = value % 12
     }
     get month() {
-
         return this._month
-
     }
     set date(value) {
-        let index = 0
-        let mountCount = 0
         let dayMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        while (value > dayMonth[index]) {
-            value -= dayMonth[index]
-            index += 1
-            mountCount += 1
-            if (index > 11) {
-                index -= 12
-            }
+        while (value > dayMonth[this.month]) {
+            value -= dayMonth[this.month]
+            this.month++
         }
-        this.month += mountCount
         return this._date = value
 
     }
-
-
     get date() {
         return this._date
     }
@@ -77,84 +67,20 @@ class MyDate {
 };
 
 class MyNewDate extends MyDate {
-
     _day = this.date
-
     get day() {
         this._day = Math.ceil(this.date / 7)
         if (this.date <= 7) {
             this._day = this.date
         }
-        switch (this._day) {
-            case 1:
-                this._day = "Monday";
-                break;
-            case 2:
-                this._day = "Tuesday";
-                break;
-            case 3:
-                this._day = "Wednesday";
-                break;
-            case 4:
-                this._day = "Thursday";
-                break;
-            case 5:
-                this._day = "Friday";
-            case 6:
-                this._day = "Saturday";
-                break;
-            case 7:
-                this._day = "Sunday";
-                break;
-        }
-        return this._day
+        return this._day = weekDays[this._day]
     }
-
     get fulldate() {
-        switch (this._month) {
-            case 0:
-                this._month = "Janury";
-                break;
-            case 1:
-                this._month = "February";
-                break;
-            case 2:
-                this._month = "March";
-                break;
-            case 3:
-                this._month = "April";
-                break;
-            case 4:
-                this._month = "May";
-                break;
-            case 5:
-                this._month = "June";
-                break;
-            case 6:
-                this._month = "July";
-                break;
-            case 7:
-                this._month = "August";
-                break;
-            case 8:
-                this._month = "September";
-                break;
-            case 9:
-                this._month = "October";
-                break;
-            case 10:
-                this._month = "November";
-                break;
-            case 11:
-                this._month = "December";
-                break;
-        }
+        this._month = monthNames[this._month]
         return `${this.day}  ${this.year} ${this.month}  ${this.date}  ${this.hours}:${this.minutes}:${this.seconds}`
     }
 }
 
 let x = new MyNewDate()
-x.miliseconds = 1000 * 60 * 60 * 24 * 605
+x.date = 691
 console.log(x.fulldate);
-
-
